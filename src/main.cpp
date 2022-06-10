@@ -101,9 +101,24 @@ void opcontrol() {
 			DT2.move_velocity(JSL*(100/127));
 		}
 
-		if(JSL > 100){
+		else if(JSL > 100){
 			DT1.move_velocity(100);
 			DT2.move_velocity(100);
+		}
+
+		else if(-15 > JSL && JSL > -100){
+			DT1.move_velocity(JSL*(100/127));
+			DT2.move_velocity(JSL*(100/127));
+		}
+
+		else if(JSL < -100){
+			DT1.move_velocity(-100);
+			DT2.move_velocity(-100);
+		}
+
+		else {
+			DT1.brake();
+			DT2.brake();
 		}
 
 		if(15 < JSR && JSR < 100){
@@ -111,35 +126,23 @@ void opcontrol() {
 			DT4.move_velocity(JSR*(100/127));
 		}
 
-		if(JSR > 100){
+		else if(JSR > 100){
 			DT3.move_velocity(100);
 			DT4.move_velocity(100);
 		}
 
-		if(-15 > JSL && JSL > -100){
-			DT1.move_velocity(JSL*(100/127));
-			DT2.move_velocity(JSL*(100/127));
-		}
-
-		if(JSL < -100){
-			DT1.move_velocity(-100);
-			DT2.move_velocity(-100);
-		}
-
-		if(-15 > JSR && JSR > -100){
+		else if(-15 > JSR && JSR > -100){
 			DT3.move_velocity(JSR*(100/127));
 			DT4.move_velocity(JSR*(100/127));
 		}
 
-		if(JSR < -100){
+		else if(JSR < -100){
 			DT3.move_velocity(-100);
 			DT4.move_velocity(-100);
 		}
 
 		//At the beginning I set the motors to the brake mode "hold" so that they would push back any time they were being forced to move. This way our stops are more precise and if we are stuck in a pushing match we cna let the robot do the work and not use more energy than we need.
 		else {
-			DT1.brake();
-			DT2.brake();
 			DT3.brake();
 			DT4.brake();
 		}

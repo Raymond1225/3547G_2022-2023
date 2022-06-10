@@ -5,8 +5,8 @@
 // 2=back left
 // 3=front right
 // 4=back right
-pros::Motor DT1(1);
-pros::Motor DT2(2);
+pros::Motor DT1(1, true);
+pros::Motor DT2(2, true);
 pros::Motor DT3(3);
 pros::Motor DT4(4);
 // These are the two intake motors
