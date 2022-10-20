@@ -20,6 +20,9 @@ pros::ADIDigitalOut Net1(1);
 pros::ADIDigitalOut Net2(2);
 pros::ADIDigitalOut Net3(3);
 pros::ADIDigitalOut Net4(4);
+
+pros::ADIDigitalOut Trigger(5);
+
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 void Turn (int Direction, int dist){
@@ -29,11 +32,18 @@ void Turn (int Direction, int dist){
   DT4.move_relative((-Direction*dist*600)/12.56, 100);
 }
 
-void DriveFWD (int dist){
+void DriveFWD (float dist){
   DT1.move_relative((dist*600)/12.56, 100);
   DT2.move_relative((dist*600)/12.56, 100);
   DT3.move_relative((dist*600)/12.56, 100);
   DT4.move_relative((dist*600)/12.56, 100);
+}
+
+void DriveSET (int dir){
+  DT1.move_velocity(dir*100);
+  DT2.move_velocity(dir*100);
+  DT3.move_velocity(dir*100);
+  DT4.move_velocity(dir*100);
 }
 
 void IntakeOnOff (int Power){
@@ -48,3 +58,13 @@ void FlyWheelOnOff (int Power){
 void RollerToggle(){
   R1.move_relative((7.47*900)/12.56, 100);
 };
+
+void RPivot (int Direction, int dist){
+  DT3.move_relative((-Direction*dist*600)/12.56, 100);
+  DT4.move_relative((-Direction*dist*600)/12.56, 100);
+}
+
+void LPivot (int Direction, int dist){
+  DT1.move_relative((Direction*dist*600)/12.56, 100);
+  DT2.move_relative((Direction*dist*600)/12.56, 100);
+}
