@@ -7,14 +7,96 @@
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-void on_center_button() {
+int AutonSelect = 0;
+void Center_Button() {
 	static bool pressed = false;
 	pressed = !pressed;
 	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
+		AutonSelect = 0;
+		pros::lcd::set_text(2, "No Auton Selected");
 	}
+}
+void Left_Button() {
+	static bool pressed = false;
+	pressed = !pressed;
+	if (pressed && AutonSelect > 1) {
+		AutonSelect --;
+		if (AutonSelect == 0){
+			pros::lcd::set_text(2, "No Auton Selected");
+		}
+		else if (AutonSelect == 1){
+			pros::lcd::set_text(2, "Left Side Double Roller");
+		}
+		else if (AutonSelect == 2){
+			pros::lcd::set_text(2, "Left Side Single Roller");
+		}
+		else if (AutonSelect == 3){
+			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+		}
+		else if (AutonSelect == 4){
+			pros::lcd::set_text(2, "Right Side Roller");
+		}
+	}
+	else if (pressed && AutonSelect == 1) {
+		AutonSelect = 4;
+		if (AutonSelect == 0){
+			pros::lcd::set_text(2, "No Auton Selected");
+		}
+		else if (AutonSelect == 1){
+			pros::lcd::set_text(2, "Left Side Double Roller");
+		}
+		else if (AutonSelect == 2){
+			pros::lcd::set_text(2, "Left Side Single Roller");
+		}
+		else if (AutonSelect == 3){
+			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+		}
+		else if (AutonSelect == 4){
+			pros::lcd::set_text(2, "Right Side Roller");
+		}
+	}
+
+}
+void Right_Button() {
+	static bool pressed = false;
+	pressed = !pressed;
+	if (pressed && AutonSelect < 4) {
+		AutonSelect ++;
+		if (AutonSelect == 0){
+			pros::lcd::set_text(2, "No Auton Selected");
+		}
+		else if (AutonSelect == 1){
+			pros::lcd::set_text(2, "Left Side Double Roller");
+		}
+		else if (AutonSelect == 2){
+			pros::lcd::set_text(2, "Left Side Single Roller");
+		}
+		else if (AutonSelect == 3){
+			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+		}
+		else if (AutonSelect == 4){
+			pros::lcd::set_text(2, "Right Side Roller");
+		}
+	}
+	else if (pressed && AutonSelect == 4) {
+		AutonSelect = 1;
+		if (AutonSelect == 0){
+			pros::lcd::set_text(2, "No Auton Selected");
+		}
+		else if (AutonSelect == 1){
+			pros::lcd::set_text(2, "Left Side Double Roller");
+		}
+		else if (AutonSelect == 2){
+			pros::lcd::set_text(2, "Left Side Single Roller");
+		}
+		else if (AutonSelect == 3){
+			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+		}
+		else if (AutonSelect == 4){
+			pros::lcd::set_text(2, "Right Side Roller");
+		}
+	}
+
 }
 
 /**
@@ -24,10 +106,27 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-//	pros::lcd::initialize();
-//	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::initialize();
+	pros::lcd::set_text(1, "Please Select Your Auton");
 
-//	pros::lcd::register_btn1_cb(on_center_button);
+	pros::lcd::register_btn1_cb(Center_Button);
+	pros::lcd::register_btn2_cb(Right_Button);
+	pros::lcd::register_btn0_cb(Left_Button);
+	if (AutonSelect == 0){
+		pros::lcd::set_text(2, "No Auton Selected");
+	}
+	else if (AutonSelect == 1){
+		pros::lcd::set_text(2, "Left Side Double Roller");
+	}
+	else if (AutonSelect == 2){
+		pros::lcd::set_text(2, "Left Side Single Roller");
+	}
+	else if (AutonSelect == 3){
+		pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+	}
+	else if (AutonSelect == 4){
+		pros::lcd::set_text(2, "Right Side Roller");
+	}
 }
 
 /**
@@ -60,9 +159,32 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	FlyWheelOnOff(1);
- 	pros::delay(5000);
-	IntakeOnOff(1);
+
+	if (AutonSelect == 1){
+		RollerToggle();
+		Turn(-1, 135);
+		DriveFWD(-13.3);
+		RollerToggle();
+	}
+	else if (AutonSelect == 2){
+		RollerToggle();
+	}
+	else if (AutonSelect == 3){
+		RollerToggle();
+		Turn(-1, 135);
+		DriveFWD(30);
+		LPivot(1, 90);
+		DriveFWD(60);
+		DriveFWD(10);
+	}
+	else if (AutonSelect == 4){
+		DriveFWD(24);
+		LPivot(1, 90);
+		RollerToggle();
+	}
+	else {
+
+	}
 	/**
 	FlyWheelOnOff(1);
  	pros::delay(2000);
@@ -228,13 +350,20 @@ void opcontrol() {
 			R1.move_velocity(100);
 		}
 
-		if (master.get_digital(DIGITAL_L1)){
+		else if (master.get_digital(DIGITAL_L1)){
 			R1.move_velocity(-100);
 		}
 
 		else {
 			R1.brake();
 		}
+
+		if (master.get_digital(DIGITAL_A)){
+			Trigger.set_value(true);
+			pros::delay(500);
+			Trigger.set_value(false);
+		}
+
 		while (NM == 1) {
 				DT1.brake();
 				DT2.brake();
