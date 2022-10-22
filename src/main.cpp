@@ -328,11 +328,11 @@ void opcontrol() {
 
 		//This section is fairly simple, if the press the top right bumper the intake pulls in disks from the ground and loads them into the fly-wheel, if the bottom right bumper is pressed it sends disks out the frond of the intake.
 		if (master.get_digital(DIGITAL_R1)) {
-			I1.move_velocity(200);
+		  R1.move_relative((7.47/12.56)*900, 100);
 		}
 
 		else if (master.get_digital(DIGITAL_R2)) {
-			I1.move_velocity(-200);
+		  R1.move_relative(-(7.47/12.56)*900, 100);
 		}
 
 		else {
