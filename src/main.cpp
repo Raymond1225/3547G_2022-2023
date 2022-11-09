@@ -66,7 +66,7 @@ void Right_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Double Roller");
+			pros::lcd::set_text(2, "Skills");
 		}
 		else if (AutonSelect == 2){
 			pros::lcd::set_text(2, "Left Side Single Roller");
@@ -161,10 +161,7 @@ void competition_initialize() {}
 void autonomous() {
 
 	if (AutonSelect == 1){
-		RollerToggle();
-		Turn(-1, 45);
-		DriveFWD(-13.3);
-		RollerToggle();
+		SkillsRollerToggle();
 	}
 	else if (AutonSelect == 2){
 		RollerToggle();
@@ -373,7 +370,7 @@ void opcontrol() {
 			Net1.set_value(false);
 		}
 
-		if (master.get_digital(DIGITAL_B)){
+		if (master.get_digital(DIGITAL_R1)){
 			C1.move_velocity(200);
 		}
 

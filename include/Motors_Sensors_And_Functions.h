@@ -69,6 +69,20 @@ void RollerToggle(){
   DT2.move_velocity(0);
   DT3.move_velocity(0);
   DT4.move_velocity(0);
+}
+
+void SkillsRollerToggle(){
+  DT1.move_velocity(100);
+  DT2.move_velocity(100);
+  DT3.move_velocity(100);
+  DT4.move_velocity(100);
+  pros::delay(1000);
+  R1.move_relative(-(7.47/12.56)*600, 100);
+  pros::delay(180);
+  DT1.move_velocity(0);
+  DT2.move_velocity(0);
+  DT3.move_velocity(0);
+  DT4.move_velocity(0);
 };
 
 void RPivot (int Direction, int dist){
