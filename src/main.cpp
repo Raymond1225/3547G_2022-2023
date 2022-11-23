@@ -162,7 +162,11 @@ void autonomous() {
 
 	if (AutonSelect == 1){
 		RollerToggle();
+<<<<<<< HEAD
 		Turn(-1, 135);
+=======
+		Turn(-1, 45);
+>>>>>>> 62e8642cb0c080b94e00b92e33cdd71a9575128a
 		DriveFWD(-13.3);
 		RollerToggle();
 	}
@@ -232,6 +236,7 @@ void opcontrol() {
 	int FWTS;
 	int FW1S;
 	int FW2S;
+	int Roller1 = 0;
 	DT1.set_brake_mode(MOTOR_BRAKE_HOLD);
 	DT2.set_brake_mode(MOTOR_BRAKE_HOLD);
 	DT3.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -239,6 +244,7 @@ void opcontrol() {
 	R1.set_brake_mode(MOTOR_BRAKE_BRAKE);
 	FW1.set_brake_mode(MOTOR_BRAKE_COAST);
 	FW2.set_brake_mode(MOTOR_BRAKE_COAST);
+	C1.set_brake_mode(MOTOR_BRAKE_BRAKE);
 	master.clear();
 	while (true) {
 		//JSL and JSR stand for joy-stick left and joy-stick right respectively. They act as a buffer to obtain the raw value of the joysticks of the controller which can go between 0 and 127
@@ -328,15 +334,20 @@ void opcontrol() {
 
 		//This section is fairly simple, if the press the top right bumper the intake pulls in disks from the ground and loads them into the fly-wheel, if the bottom right bumper is pressed it sends disks out the frond of the intake.
 		if (master.get_digital(DIGITAL_R1)) {
-			I1.move_velocity(200);
+		  Roller1 = 1;
 		}
 
 		else if (master.get_digital(DIGITAL_R2)) {
-			I1.move_velocity(-200);
+		  Roller1 = -1;
 		}
 
 		else {
-			I1.move_velocity(0);
+			Roller1 = 0;
+		}
+
+		while (abs(Roller1) > 0){
+			R1.move_relative(Roller1*(7.47/12.56)*900, 100);
+			Roller1 = 0;
 		}
 
 		//This section is what I call "Net Mode". When we press the up button on the controller whcih changes the variable NM to 1. While NM equals 1 the drive base is set to hold and the rest of the motors on the drive base are set to 0 and each of the bumpers on the controller are set to activate one of the cylenders to fire the net mechanism. The up button is set to fire them all at once. The X button is set to turn NM to 0 and deactivate net mode.
@@ -359,9 +370,25 @@ void opcontrol() {
 		}
 
 		if (master.get_digital(DIGITAL_A)){
+<<<<<<< HEAD
 			Trigger.set_value(true);
 			pros::delay(500);
 			Trigger.set_value(false);
+=======
+			Net1.set_value(true);
+		}
+
+		else {
+			Net1.set_value(false);
+		}
+
+		if (master.get_digital(DIGITAL_B)){
+			C1.move_velocity(200);
+		}
+
+		else {
+			C1.brake();
+>>>>>>> 62e8642cb0c080b94e00b92e33cdd71a9575128a
 		}
 
 		while (NM == 1) {

@@ -15,6 +15,8 @@ pros::Motor R1(8);
 // These are our two fly-wheel motors
 pros::Motor FW1(3);
 pros::Motor FW2(2);
+
+pros::Motor C1(20);
 // These are the net releases on the four corners of our robot.They are in the same order as our drive train.
 pros::ADIDigitalOut Net1(1);
 pros::ADIDigitalOut Net2(2);
@@ -56,7 +58,17 @@ void FlyWheelOnOff (int Power){
 }
 
 void RollerToggle(){
-  R1.move_relative((7.47*900)/12.56, 100);
+  DT1.move_velocity(100);
+  DT2.move_velocity(100);
+  DT3.move_velocity(100);
+  DT4.move_velocity(100);
+  pros::delay(1000);
+  R1.move_relative(-(7.47/12.56)*300, 100);
+  pros::delay(180);
+  DT1.move_velocity(0);
+  DT2.move_velocity(0);
+  DT3.move_velocity(0);
+  DT4.move_velocity(0);
 };
 
 void RPivot (int Direction, int dist){
