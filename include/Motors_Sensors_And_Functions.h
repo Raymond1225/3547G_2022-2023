@@ -7,14 +7,14 @@
 // 4=back right
 pros::Motor DT1(6, true);
 pros::Motor DT2(7, true);
-pros::Motor DT3(5);
+pros::Motor DT3(10);
 pros::Motor DT4(4);
 // These are the two intake motors
 pros::Motor I1(1);
 pros::Motor R1(8);
 // These are our two fly-wheel motors
-pros::Motor FW1(3);
-pros::Motor FW2(2);
+pros::Motor FW1(3, true);
+pros::Motor FW2(1, true);
 
 pros::Motor C1(20);
 // These are the net releases on the four corners of our robot.They are in the same order as our drive train.

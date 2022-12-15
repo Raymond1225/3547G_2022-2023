@@ -162,11 +162,7 @@ void autonomous() {
 
 	if (AutonSelect == 1){
 		RollerToggle();
-<<<<<<< HEAD
-		Turn(-1, 135);
-=======
 		Turn(-1, 45);
->>>>>>> 62e8642cb0c080b94e00b92e33cdd71a9575128a
 		DriveFWD(-13.3);
 		RollerToggle();
 	}
@@ -294,8 +290,8 @@ void opcontrol() {
 		}
 
 		if (FWM == 1) {
-			FW1.move_velocity(135);
-			FW2.move_velocity(135);
+			FW1.move_velocity(100);
+			FW2.move_velocity(100);
 			master.print(0, 0, "Fly-Wheel Mode: %s", "Close");
 			FWAS = (FW1.get_actual_velocity() + FW2.get_actual_velocity())/2;
 			FWP = 100*(FWAS/FW1.get_target_velocity());
@@ -304,8 +300,8 @@ void opcontrol() {
 		}
 
 		if (FWM == 2) {
-			FW1.move_velocity(200);
-			FW2.move_velocity(200);
+			FW1.move_velocity(150);
+			FW2.move_velocity(150);
 			master.print(0, 0, "Fly-Wheel Mode: %s", "Medium");
 			FWAS = (FW1.get_actual_velocity() + FW2.get_actual_velocity())/2;
 			FWP = 100*(FWAS/FW1.get_target_velocity());
@@ -323,8 +319,8 @@ void opcontrol() {
 
 
 		if (FWM == 3) {
-			FW1.move_velocity(300);
-			FW2.move_velocity(300);
+			FW1.move_velocity(200);
+			FW2.move_velocity(200);
 			master.print(0, 0, "Fly-Wheel Mode: %s", "Far");
 			FWAS = (FW1.get_actual_velocity() + FW2.get_actual_velocity())/2;
 			FWP = 100*(FWAS/FW1.get_target_velocity());
@@ -370,11 +366,6 @@ void opcontrol() {
 		}
 
 		if (master.get_digital(DIGITAL_A)){
-<<<<<<< HEAD
-			Trigger.set_value(true);
-			pros::delay(500);
-			Trigger.set_value(false);
-=======
 			Net1.set_value(true);
 		}
 
@@ -388,7 +379,6 @@ void opcontrol() {
 
 		else {
 			C1.brake();
->>>>>>> 62e8642cb0c080b94e00b92e33cdd71a9575128a
 		}
 
 		while (NM == 1) {
