@@ -176,15 +176,10 @@ void competition_initialize() {}
 void autonomous() {
 
 	if (AutonSelect == 1){
-		//Left side Roller shot
 		RollerToggle();
-		DriveFWD(1);
-		Turn(1, 12);
-		FlyWheelOnOff(.5);
-		pros::delay(5000);
-		Unload();
-		pros::delay(1000);
-		FlyWheelOnOff(0);
+		Turn(-1, 45);
+		DriveFWD(-13.3);
+		RollerToggle();
 	}
 	else if (AutonSelect == 2){
 		//Left side Center shot
@@ -468,8 +463,7 @@ void opcontrol() {
 		}
 
 		if (master.get_digital(DIGITAL_B)){
-			Net2.set_value(true);
-			Net3.set_value(true);
+			C1.move_velocity(200);
 		}
 
 		else {
