@@ -25,16 +25,19 @@ void Left_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Double Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Single Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller");
+			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
+		}
+		else if (AutonSelect == 5){
+			pros::lcd::set_text(2, "Skills");
 		}
 	}
 	else if (pressed && AutonSelect == 1) {
@@ -43,16 +46,19 @@ void Left_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Double Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Single Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller");
+			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
+		}
+		else if (AutonSelect == 5){
+			pros::lcd::set_text(2, "Skills");
 		}
 	}
 
@@ -66,16 +72,19 @@ void Right_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Double Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Single Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller");
+			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
+		}
+		else if (AutonSelect == 5){
+			pros::lcd::set_text(2, "Skills");
 		}
 	}
 	else if (pressed && AutonSelect == 4) {
@@ -84,16 +93,19 @@ void Right_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Double Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Single Roller");
+			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller");
+			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
+		}
+		else if (AutonSelect == 5){
+			pros::lcd::set_text(2, "Skills");
 		}
 	}
 
@@ -116,16 +128,19 @@ void initialize() {
 		pros::lcd::set_text(2, "No Auton Selected");
 	}
 	else if (AutonSelect == 1){
-		pros::lcd::set_text(2, "Left Side Double Roller");
+		pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
 	}
 	else if (AutonSelect == 2){
-		pros::lcd::set_text(2, "Left Side Single Roller");
+		pros::lcd::set_text(2, "Left Side Roller + Center Shot");
 	}
 	else if (AutonSelect == 3){
-		pros::lcd::set_text(2, "Left Side Roller and 3 Disks");
+		pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
 	}
 	else if (AutonSelect == 4){
-		pros::lcd::set_text(2, "Right Side Roller");
+		pros::lcd::set_text(2, "Right Side Roller + Center Shot");
+	}
+	else if (AutonSelect == 5){
+		pros::lcd::set_text(2, "Skills");
 	}
 }
 
@@ -161,26 +176,101 @@ void competition_initialize() {}
 void autonomous() {
 
 	if (AutonSelect == 1){
+		//Left side Roller shot
 		RollerToggle();
-		Turn(-1, 45);
-		DriveFWD(-13.3);
-		RollerToggle();
+		DriveFWD(1);
+		Turn(1, 12);
+		FlyWheelOnOff(.5);
+		pros::delay(5000);
+		Unload();
+		pros::delay(1000);
+		FlyWheelOnOff(0);
 	}
 	else if (AutonSelect == 2){
+		//Left side Center shot
 		RollerToggle();
+		Turn(-1, 45);
+		DriveFWD(-84.85);
+		Turn(1, 45);
+		FlyWheelOnOff(1);
+		pros::delay(1000);
+		Unload();
+		FlyWheelOnOff(0);
 	}
 	else if (AutonSelect == 3){
+		//Right side Roller shot
+		DriveFWD(18);
+		Turn(1, 90);
 		RollerToggle();
-		Turn(-1, 135);
-		DriveFWD(30);
-		LPivot(1, 90);
-		DriveFWD(60);
-		DriveFWD(10);
+		Turn(-1, 0);
+		FlyWheelOnOff(1);
+		pros::delay(1000);
+		Unload();
+		FlyWheelOnOff(0);
 	}
 	else if (AutonSelect == 4){
-		DriveFWD(24);
-		LPivot(1, 90);
+		//Right side Center shot
+		DriveFWD(18);
+		Turn(1, 90);
 		RollerToggle();
+		Turn(1, 45);
+		DriveFWD(-84.85);
+		Turn(-1, 45);
+		FlyWheelOnOff(1);
+		pros::delay(1000);
+		Unload();
+		FlyWheelOnOff(0);
+	}
+	else if (AutonSelect == 5){
+		//Skills
+		SkRT1();
+		std::cout << "l" << std::endl;
+		master.print(0, 2, "1");
+		std::cout << "hi" << std::endl;
+		DriveFWD(-24);
+		std::cout << "f" << std::endl;
+		master.clear();
+		Turn(-1, 12);
+		DT1.move_velocity(100);
+	  DT2.move_velocity(100);
+	  DT3.move_velocity(100);
+	  DT4.move_velocity(100);
+		R1.move_velocity(100);
+		pros::delay(100);
+		DT1.move_velocity(0);
+	  DT2.move_velocity(0);
+	  DT3.move_velocity(0);
+	  DT4.move_velocity(0);
+		R1.move_velocity(0);
+		//Maybe try and push some disks here?
+		DriveFWD(24);
+		Turn(-1, 45);
+		DriveFWD(-169.70);
+		Turn(1, 135);
+		DT1.move_velocity(100);
+	  DT2.move_velocity(100);
+	  DT3.move_velocity(100);
+	  DT4.move_velocity(100);
+		R1.move_velocity(100);
+		pros::delay(100);
+		DT1.move_velocity(0);
+	  DT2.move_velocity(0);
+	  DT3.move_velocity(0);
+	  DT4.move_velocity(0);
+		R1.move_velocity(0);
+		DriveFWD(24);
+		Turn(1, 90);
+		DT1.move_velocity(100);
+	  DT2.move_velocity(100);
+	  DT3.move_velocity(100);
+	  DT4.move_velocity(100);
+		R1.move_velocity(100);
+		pros::delay(100);
+		DT1.move_velocity(0);
+	  DT2.move_velocity(0);
+	  DT3.move_velocity(0);
+	  DT4.move_velocity(0);
+		R1.move_velocity(0);
 	}
 	else {
 
@@ -238,6 +328,7 @@ void opcontrol() {
 	DT3.set_brake_mode(MOTOR_BRAKE_HOLD);
 	DT4.set_brake_mode(MOTOR_BRAKE_HOLD);
 	R1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+	R2.set_brake_mode(MOTOR_BRAKE_BRAKE);
 	FW1.set_brake_mode(MOTOR_BRAKE_COAST);
 	FW2.set_brake_mode(MOTOR_BRAKE_COAST);
 	C1.set_brake_mode(MOTOR_BRAKE_BRAKE);
@@ -354,15 +445,18 @@ void opcontrol() {
 		}
 
 		if (master.get_digital(DIGITAL_L2)){
-			R1.move_velocity(100);
+			R1.move_velocity(200);
+			R2.move_velocity(200);
 		}
 
 		else if (master.get_digital(DIGITAL_L1)){
-			R1.move_velocity(-100);
+			R1.move_velocity(-200);
+			R2.move_velocity(-200);
 		}
 
 		else {
 			R1.brake();
+			R2.brake();
 		}
 
 		if (master.get_digital(DIGITAL_A)){
@@ -374,11 +468,13 @@ void opcontrol() {
 		}
 
 		if (master.get_digital(DIGITAL_B)){
-			C1.move_velocity(200);
+			Net2.set_value(true);
+			Net3.set_value(true);
 		}
 
 		else {
-			C1.brake();
+			Net3.set_value(false);
+			Net2.set_value(false);
 		}
 
 		while (NM == 1) {
@@ -388,7 +484,7 @@ void opcontrol() {
 				DT4.brake();
 				FW1.move_velocity(0);
 				FW2.move_velocity(0);
-				I1.move_velocity(0);
+				R1.move_velocity(0);
 
 				if (master.get_digital(DIGITAL_L1)){
 					Net1.set_value(true);

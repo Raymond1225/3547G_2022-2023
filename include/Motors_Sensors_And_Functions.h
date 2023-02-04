@@ -10,7 +10,7 @@ pros::Motor DT2(7, true);
 pros::Motor DT3(10);
 pros::Motor DT4(4);
 // These are the two intake motors
-pros::Motor I1(1);
+pros::Motor R2(1, true);
 pros::Motor R1(8);
 // These are our two fly-wheel motors
 pros::Motor FW1(3, true);
@@ -27,7 +27,18 @@ pros::ADIDigitalOut Trigger(5);
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-void Turn (int Direction, int dist){
+void WaitTillStopDriveBase() {
+  int Volts;
+  pros::delay(150);
+  master.print(2, 0, "PlaceHolder: %i", 1);
+  Volts = DT1.get_actual_velocity();
+  while(abs(Volts) > 1){
+    pros::delay(10);
+    Volts = DT1.get_actual_velocity();
+  }
+}
+
+void Turn (int Direction, float dist){
   DT1.move_relative((Direction*dist*600)/12.56, 100);
   DT2.move_relative((Direction*dist*600)/12.56, 100);
   DT3.move_relative((-Direction*dist*600)/12.56, 100);
@@ -49,12 +60,31 @@ void DriveSET (int dir){
 }
 
 void IntakeOnOff (int Power){
-  I1.move_velocity(200*Power);
+  R1.move_velocity(200*Power);
+  R2.move_velocity(200*Power);
 }
 
-void FlyWheelOnOff (int Power){
-  FW1.move_velocity(135*Power);
-  FW2.move_velocity(135*Power);
+void FlyWheelOnOff (float Power){
+  FW1.move_velocity(200*Power);
+  FW2.move_velocity(200*Power);
+}
+
+void Unload (){
+  Net1.set_value(true);
+  pros::delay(100);
+  Net1.set_value(false);
+  pros::delay(750);
+  Net1.set_value(true);
+  pros::delay(100);
+  Net1.set_value(false);
+  pros::delay(750);
+  Net1.set_value(true);
+  pros::delay(100);
+  Net1.set_value(false);
+  pros::delay(750);
+  Net1.set_value(true);
+  pros::delay(100);
+  Net1.set_value(false);
 }
 
 void RollerToggle(){
@@ -64,6 +94,7 @@ void RollerToggle(){
   DT4.move_velocity(100);
   pros::delay(1000);
   R1.move_relative(-(7.47/12.56)*300, 100);
+  R2.move_relative(-(7.47/12.56)*300, 100);
   pros::delay(180);
   DT1.move_velocity(0);
   DT2.move_velocity(0);
@@ -79,4 +110,13 @@ void RPivot (int Direction, int dist){
 void LPivot (int Direction, int dist){
   DT1.move_relative((Direction*dist*600)/12.56, 100);
   DT2.move_relative((Direction*dist*600)/12.56, 100);
+}
+
+void SkRT1 (){
+  DT1.move_relative((2*600)/12.56, 100);
+  DT2.move_relative((2*600)/12.56, 100);
+  DT3.move_relative((2*600)/12.56, 100);
+  DT4.move_relative((2*600)/12.56, 100);
+  R1.move_relative(-(7.47/12.56)*600, 100);
+  
 }
