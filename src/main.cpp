@@ -177,9 +177,6 @@ void autonomous() {
 
 	if (AutonSelect == 1){
 		RollerToggle();
-		Turn(-1, 45);
-		DriveFWD(-13.3);
-		RollerToggle();
 	}
 	else if (AutonSelect == 2){
 		//Left side Center shot
@@ -330,8 +327,8 @@ void opcontrol() {
 	master.clear();
 	while (true) {
 		//JSL and JSR stand for joy-stick left and joy-stick right respectively. They act as a buffer to obtain the raw value of the joysticks of the controller which can go between 0 and 127
-		JSL = master.get_analog(ANALOG_LEFT_Y);
-		JSR = master.get_analog(ANALOG_RIGHT_Y);
+		JSL = master.get_analog(ANALOG_RIGHT_Y);
+		JSR = master.get_analog(ANALOG_LEFT_Y);
 		//Below is the actual drive code it reads JSL and JSR to determine if they are within cetain values and acts on them. If the values are between 15 and 100 positive or negative the motors are set to the variable*(100/127).
 		//The reason for the alteration of the joy-stick is that the maximum value I can put into the motor is 100 so scaling the joy-stick to the motor allows for finer movement.
 		//The reason for waiting until the joy-stick reads at least 15 is to avoid unintentional movement if the joy-stick doesn't return directly to center or if the joy-stick flicks back and imputs a negative value before returning to center.
@@ -376,8 +373,8 @@ void opcontrol() {
 		}
 
 		if (FWM == 1) {
-			FW1.move_velocity(100);
-			FW2.move_velocity(100);
+			FW1.move_voltage(7000);
+			FW2.move_voltage(7000);
 			master.print(0, 0, "Fly-Wheel Mode: %s", "Close");
 			FWAS = (FW1.get_actual_velocity() + FW2.get_actual_velocity())/2;
 			FWP = 100*(FWAS/FW1.get_target_velocity());
