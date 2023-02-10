@@ -7,7 +7,7 @@
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-int AutonSelect = 0;
+int AutonSelect = 4;
 void Center_Button() {
 	static bool pressed = false;
 	pressed = !pressed;
@@ -25,19 +25,16 @@ void Left_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
+			pros::lcd::set_text(2, "Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Skills");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
-		}
-		else if (AutonSelect == 5){
-			pros::lcd::set_text(2, "Skills");
+			pros::lcd::set_text(2, "Skills 2");
 		}
 	}
 	else if (pressed && AutonSelect == 1) {
@@ -46,19 +43,16 @@ void Left_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
+			pros::lcd::set_text(2, "Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Skills");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
-		}
-		else if (AutonSelect == 5){
-			pros::lcd::set_text(2, "Skills");
+			pros::lcd::set_text(2, "Skills 2");
 		}
 	}
 
@@ -72,19 +66,16 @@ void Right_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
+			pros::lcd::set_text(2, "Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Skills");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
-		}
-		else if (AutonSelect == 5){
-			pros::lcd::set_text(2, "Skills");
+			pros::lcd::set_text(2, "Skills 2");
 		}
 	}
 	else if (pressed && AutonSelect == 4) {
@@ -93,19 +84,16 @@ void Right_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Left Side Roller + Center Shot");
+			pros::lcd::set_text(2, "Roller + Center Shot");
 		}
 		else if (AutonSelect == 3){
-			pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
+			pros::lcd::set_text(2, "Skills");
 		}
 		else if (AutonSelect == 4){
-			pros::lcd::set_text(2, "Right Side Roller + Center Shot");
-		}
-		else if (AutonSelect == 5){
-			pros::lcd::set_text(2, "Skills");
+			pros::lcd::set_text(2, "Skills 2");
 		}
 	}
 
@@ -125,23 +113,17 @@ void initialize() {
 	pros::lcd::register_btn2_cb(Right_Button);
 	pros::lcd::register_btn0_cb(Left_Button);
 	if (AutonSelect == 0){
-		pros::lcd::set_text(2, "No Auton Selected");
-	}
-	else if (AutonSelect == 1){
-		pros::lcd::set_text(2, "Left Side Roller + Roller Shot");
-	}
-	else if (AutonSelect == 2){
-		pros::lcd::set_text(2, "Left Side Roller + Center Shot");
-	}
-	else if (AutonSelect == 3){
-		pros::lcd::set_text(2, "Right Side Roller + Roller Shot");
-	}
-	else if (AutonSelect == 4){
-		pros::lcd::set_text(2, "Right Side Roller + Center Shot");
-	}
-	else if (AutonSelect == 5){
-		pros::lcd::set_text(2, "Skills");
-	}
+			pros::lcd::set_text(2, "No Auton Selected");
+		}
+		else if (AutonSelect == 1){
+			pros::lcd::set_text(2, "Roller + Roller Shot");
+		}
+		else if (AutonSelect == 2){
+			pros::lcd::set_text(2, "Roller + Center Shot");
+		}
+		else if (AutonSelect == 3){
+			pros::lcd::set_text(2, "Skills");
+		}
 }
 
 /**
@@ -176,10 +158,16 @@ void competition_initialize() {}
 void autonomous() {
 
 	if (AutonSelect == 1){
+		//roller shot
 		RollerToggle();
+		WaitTillStopDriveBase();
+		RPivot(-1, 5.30);
+		WaitTillStopDriveBase();
+		FlyWheelOnOff(117);
+		Unload();
 	}
 	else if (AutonSelect == 2){
-		//Left side Center shot
+		//Center shot
 		RollerToggle();
 		Turn(-1, 45);
 		DriveFWD(-84.85);
@@ -190,79 +178,113 @@ void autonomous() {
 		FlyWheelOnOff(0);
 	}
 	else if (AutonSelect == 3){
-		//Right side Roller shot
-		DriveFWD(18);
-		Turn(1, 90);
-		RollerToggle();
-		Turn(-1, 0);
-		FlyWheelOnOff(1);
+		DT1.set_brake_mode(MOTOR_BRAKE_HOLD);
+		DT2.set_brake_mode(MOTOR_BRAKE_HOLD);
+		DT3.set_brake_mode(MOTOR_BRAKE_HOLD);
+		DT4.set_brake_mode(MOTOR_BRAKE_HOLD);
+		R1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		R2.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		FW1.set_brake_mode(MOTOR_BRAKE_COAST);
+		FW2.set_brake_mode(MOTOR_BRAKE_COAST);
+		C1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		//skills
+		//pickup one, shoot three
+		Turn(1, 6.5);
+		FlyWheelOnOffS(115);
+		IntakeOnOff(200);
+		WaitTillStopDriveBase();
+		DriveFWDSlow(-12);
+		WaitTillStopDriveBase();
+		Turn(1, 5.5);
+		WaitTillStopDriveBase();
 		pros::delay(1000);
 		Unload();
-		FlyWheelOnOff(0);
+		//one rollers
+		pros::delay(60000);
+		Turn(-1, 2);
+		WaitTillStopDriveBase();
+		DriveFWD(-10);
+		WaitTillStopDriveBase();
+		SkillsRollerToggle();
+		WaitTillStopDriveBase();
+		//shoot triple stack
+		pros::delay(60000);
+		//shoot three in a row
+		pros::delay(60000);
+		//shoot triple stack
+		pros::delay(60000);
+		//shoot triple stack
+		pros::delay(60000);
+		//pick up disk three disks
+		pros::delay(60000);
+		//flip rollers and shoot three
+		pros::delay(60000);
+		//pick up three in a row and shoot
+		pros::delay(60000);
+		//pick up three in a row shoot
+		pros::delay(60000);
+		//pick up triple stack shoot
+		pros::delay(60000);
 	}
 	else if (AutonSelect == 4){
-		//Right side Center shot
-		DriveFWD(18);
-		Turn(1, 90);
-		RollerToggle();
-		Turn(1, 45);
-		DriveFWD(-84.85);
-		Turn(-1, 45);
-		FlyWheelOnOff(1);
-		pros::delay(1000);
-		Unload();
-		FlyWheelOnOff(0);
-	}
-	else if (AutonSelect == 5){
-		//Skills
-		SkRT1();
-		std::cout << "l" << std::endl;
-		master.print(0, 2, "1");
-		std::cout << "hi" << std::endl;
-		DriveFWD(-24);
-		std::cout << "f" << std::endl;
-		master.clear();
+		Net2.set_value(true);
+		Net3.set_value(true);
+		DT1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		DT2.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		DT3.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		DT4.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		R1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		R2.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		FW1.set_brake_mode(MOTOR_BRAKE_COAST);
+		FW2.set_brake_mode(MOTOR_BRAKE_COAST);
+		C1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+		DriveFWD(-3);
+		WaitTillStopDriveBase();
+		SkillsRollerToggle();
+		WaitTillStopDriveBase();
+		DriveFWDSlow(24);
+		WaitTillStopDriveBase();
 		Turn(-1, 12);
-		DT1.move_velocity(100);
-	  DT2.move_velocity(100);
-	  DT3.move_velocity(100);
-	  DT4.move_velocity(100);
-		R1.move_velocity(100);
-		pros::delay(100);
-		DT1.move_velocity(0);
-	  DT2.move_velocity(0);
-	  DT3.move_velocity(0);
-	  DT4.move_velocity(0);
-		R1.move_velocity(0);
-		//Maybe try and push some disks here?
-		DriveFWD(24);
-		Turn(-1, 45);
-		DriveFWD(-169.70);
-		Turn(1, 135);
-		DT1.move_velocity(100);
-	  DT2.move_velocity(100);
-	  DT3.move_velocity(100);
-	  DT4.move_velocity(100);
-		R1.move_velocity(100);
-		pros::delay(100);
-		DT1.move_velocity(0);
-	  DT2.move_velocity(0);
-	  DT3.move_velocity(0);
-	  DT4.move_velocity(0);
-		R1.move_velocity(0);
-		DriveFWD(24);
-		Turn(1, 90);
-		DT1.move_velocity(100);
-	  DT2.move_velocity(100);
-	  DT3.move_velocity(100);
-	  DT4.move_velocity(100);
-		R1.move_velocity(100);
-		pros::delay(100);
-		DT1.move_velocity(0);
-	  DT2.move_velocity(0);
-	  DT3.move_velocity(0);
-	  DT4.move_velocity(0);
-		R1.move_velocity(0);
+		WaitTillStopDriveBase();
+		DriveFWDSlow(-28);
+		WaitTillStopDriveBase();
+		SkillsRollerToggle();
+		WaitTillStopDriveBase();
+		DriveFWDSlow(28);
+		WaitTillStopDriveBase();
+		Turn(1, 5.1);
+		WaitTillStopDriveBase();
+		DriveFWDSlow(200);
+		WaitTillStopDriveBase();
+		DriveFWDSlow(-32.25);
+		WaitTillStopDriveBase();
+		Turn(-1, 20);
+		WaitTillStopDriveBase();
+		DriveFWDSlow(-28);
+	//	IntakeOnOff(200);
+		WaitTillStopDriveBase();
+		//IntakeOnOff(0);
+		SkillsRollerToggle();
+		WaitTillStopDriveBase();
+		DriveFWDSlow(24);
+		WaitTillStopDriveBase();
+		Turn(-1, 12);
+		WaitTillStopDriveBase();
+		DriveFWDSlow(-24);
+		//IntakeOnOff(200);
+		WaitTillStopDriveBase();
+	//	IntakeOnOff(0);
+		SkillsRollerToggle();
+		WaitTillStopDriveBase();
+		DriveFWDSlow(14);
+		WaitTillStopDriveBase();
+		Turn(1, 12);
+		WaitTillStopDriveBase();
+		DriveFWDSlow(-10);
+		WaitTillStopDriveBase();
+		Turn(-1, 6);
+		WaitTillStopDriveBase();
+		Expansion();
 	}
 	else {
 
@@ -460,12 +482,13 @@ void opcontrol() {
 		}
 
 		if (master.get_digital(DIGITAL_B)){
-			C1.move_velocity(200);
+			Net3.set_value(false);
+			Net2.set_value(false);
 		}
 
 		else {
-			Net3.set_value(false);
-			Net2.set_value(false);
+			Net3.set_value(true);
+			Net2.set_value(true);
 		}
 
 		while (NM == 1) {

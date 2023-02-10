@@ -46,10 +46,17 @@ void Turn (int Direction, float dist){
 }
 
 void DriveFWD (float dist){
-  DT1.move_relative((dist*600)/12.56, 100);
-  DT2.move_relative((dist*600)/12.56, 100);
-  DT3.move_relative((dist*600)/12.56, 100);
-  DT4.move_relative((dist*600)/12.56, 100);
+  DT1.move_relative((dist*600)/12.56, 200);
+  DT2.move_relative((dist*600)/12.56, 200);
+  DT3.move_relative((dist*600)/12.56, 200);
+  DT4.move_relative((dist*600)/12.56, 200);
+}
+
+void DriveFWDSlow (float dist){
+  DT1.move_relative((dist*600)/12.56, 50);
+  DT2.move_relative((dist*600)/12.56, 50);
+  DT3.move_relative((dist*600)/12.56, 50);
+  DT4.move_relative((dist*600)/12.56, 50);
 }
 
 void DriveSET (int dir){
@@ -60,28 +67,37 @@ void DriveSET (int dir){
 }
 
 void IntakeOnOff (int Power){
-  R1.move_velocity(200*Power);
-  R2.move_velocity(200*Power);
+  R1.move_velocity(Power);
+  R2.move_velocity(Power);
 }
 
 void FlyWheelOnOff (float Power){
-  FW1.move_velocity(200*Power);
-  FW2.move_velocity(200*Power);
+  FW1.move_velocity(Power);
+  FW2.move_velocity(Power);
+  while(FW1.get_actual_velocity() < Power){
+    FW1.move_velocity(Power);
+    FW2.move_velocity(Power);
+  }
+  FW1.move_velocity(0);
+  FW2.move_velocity(0);
+  FW1.move_voltage((Power/154)*12000);
+  FW2.move_voltage((Power/154)*12000);
+}
+
+void FlyWheelOnOffS (float Power){
+  FW1.move_velocity(Power);
+  FW2.move_velocity(Power);
 }
 
 void Unload (){
   Net1.set_value(true);
   pros::delay(100);
   Net1.set_value(false);
-  pros::delay(750);
+  pros::delay(850);
   Net1.set_value(true);
   pros::delay(100);
   Net1.set_value(false);
-  pros::delay(750);
-  Net1.set_value(true);
-  pros::delay(100);
-  Net1.set_value(false);
-  pros::delay(750);
+  pros::delay(850);
   Net1.set_value(true);
   pros::delay(100);
   Net1.set_value(false);
@@ -103,12 +119,13 @@ void RollerToggle(){
 }
 
 void SkillsRollerToggle(){
-  DT1.move_velocity(100);
-  DT2.move_velocity(100);
-  DT3.move_velocity(100);
-  DT4.move_velocity(100);
-  pros::delay(1000);
-  R1.move_relative(-(7.47/12.56)*600, 100);
+  DT1.move_velocity(-100);
+  DT2.move_velocity(-100);
+  DT3.move_velocity(-100);
+  DT4.move_velocity(-100);
+  pros::delay(200);
+  R1.move_relative((7.47/12.56)*600, 100);
+  R2.move_relative((7.47/12.56)*600, 100);
   pros::delay(180);
   DT1.move_velocity(0);
   DT2.move_velocity(0);
@@ -116,14 +133,14 @@ void SkillsRollerToggle(){
   DT4.move_velocity(0);
 };
 
-void RPivot (int Direction, int dist){
-  DT3.move_relative((-Direction*dist*600)/12.56, 100);
-  DT4.move_relative((-Direction*dist*600)/12.56, 100);
+void RPivot (int Direction, float dist){
+  DT1.move_relative((-Direction*dist*600)/12.56, 100);
+  DT2.move_relative((-Direction*dist*600)/12.56, 100);
 }
 
-void LPivot (int Direction, int dist){
-  DT1.move_relative((Direction*dist*600)/12.56, 100);
-  DT2.move_relative((Direction*dist*600)/12.56, 100);
+void LPivot (int Direction, float dist){
+  DT3.move_relative((Direction*dist*600)/12.56, 100);
+  DT4.move_relative((Direction*dist*600)/12.56, 100);
 }
 
 void SkRT1 (){
@@ -133,4 +150,9 @@ void SkRT1 (){
   DT4.move_relative((2*600)/12.56, 100);
   R1.move_relative(-(7.47/12.56)*600, 100);
 
+}
+
+void Expansion (){
+  Net2.set_value(true);
+  Net3.set_value(true);
 }
