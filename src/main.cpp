@@ -242,7 +242,7 @@ void autonomous() {
 		WaitTillStopDriveBase();
 		SkillsRollerToggle();
 		WaitTillStopDriveBase();
-		DriveFWDSlow(24);
+		DriveFWDSlow(26);
 		WaitTillStopDriveBase();
 		Turn(-1, 12);
 		WaitTillStopDriveBase();
@@ -252,7 +252,7 @@ void autonomous() {
 		WaitTillStopDriveBase();
 		DriveFWDSlow(28);
 		WaitTillStopDriveBase();
-		Turn(1, 5.1);
+		Turn(1, 5.7);
 		WaitTillStopDriveBase();
 		DriveFWDSlow(200);
 		WaitTillStopDriveBase();
