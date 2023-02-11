@@ -19,8 +19,8 @@ pros::Motor FW2(1, true);
 pros::Motor C1(20);
 // These are the net releases on the four corners of our robot.They are in the same order as our drive train.
 pros::ADIDigitalOut Net1(1);
-pros::ADIDigitalOut Net2(2, true);
-pros::ADIDigitalOut Net3(3, true);
+pros::ADIDigitalOut Net2(2, false);
+pros::ADIDigitalOut Net3(3, false);
 pros::ADIDigitalOut Net4(4);
 
 pros::ADIDigitalOut Trigger(5);
@@ -153,6 +153,6 @@ void SkRT1 (){
 }
 
 void Expansion (){
-  Net2.set_value(false);
-  Net3.set_value(false);
+  Net2.set_value(true);
+  Net3.set_value(true);
 }

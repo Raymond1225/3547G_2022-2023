@@ -242,7 +242,7 @@ void autonomous() {
 		WaitTillStopDriveBase();
 		SkillsRollerToggle();
 		WaitTillStopDriveBase();
-		DriveFWDSlow(26);
+		DriveFWDSlow(28);
 		WaitTillStopDriveBase();
 		Turn(-1, 12);
 		WaitTillStopDriveBase();
@@ -482,13 +482,13 @@ void opcontrol() {
 		}
 
 		if (master.get_digital(DIGITAL_B)){
-			Net3.set_value(false);
-			Net2.set_value(false);
+			Net3.set_value(true);
+			Net2.set_value(true);
 		}
 
 		else {
-			Net3.set_value(true);
-			Net2.set_value(true);
+			Net3.set_value(false);
+			Net2.set_value(false);
 		}
 
 		while (NM == 1) {
