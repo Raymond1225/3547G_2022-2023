@@ -7,7 +7,7 @@
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-int AutonSelect = 4;
+int AutonSelect = 1;
 void Center_Button() {
 	static bool pressed = false;
 	pressed = !pressed;
@@ -28,7 +28,7 @@ void Left_Button() {
 			pros::lcd::set_text(2, "Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Roller + Center Shot");
+			pros::lcd::set_text(2, "Right");
 		}
 		else if (AutonSelect == 3){
 			pros::lcd::set_text(2, "Skills");
@@ -46,7 +46,7 @@ void Left_Button() {
 			pros::lcd::set_text(2, "Roller + Roller Shot");
 		}
 		else if (AutonSelect == 2){
-			pros::lcd::set_text(2, "Roller + Center Shot");
+			pros::lcd::set_text(2, "Right");
 		}
 		else if (AutonSelect == 3){
 			pros::lcd::set_text(2, "Skills");
@@ -66,7 +66,7 @@ void Right_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Roller + Roller Shot");
+			pros::lcd::set_text(2, "Right");
 		}
 		else if (AutonSelect == 2){
 			pros::lcd::set_text(2, "Roller + Center Shot");
@@ -84,7 +84,7 @@ void Right_Button() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Roller + Roller Shot");
+			pros::lcd::set_text(2, "Right");
 		}
 		else if (AutonSelect == 2){
 			pros::lcd::set_text(2, "Roller + Center Shot");
@@ -116,7 +116,7 @@ void initialize() {
 			pros::lcd::set_text(2, "No Auton Selected");
 		}
 		else if (AutonSelect == 1){
-			pros::lcd::set_text(2, "Roller + Roller Shot");
+			pros::lcd::set_text(2, "Right");
 		}
 		else if (AutonSelect == 2){
 			pros::lcd::set_text(2, "Roller + Center Shot");
@@ -124,6 +124,8 @@ void initialize() {
 		else if (AutonSelect == 3){
 			pros::lcd::set_text(2, "Skills");
 		}
+
+		GPS1.initialize_full(1.35, -0.8, 90, -0.04445, 0.15875);
 }
 
 /**
@@ -159,23 +161,81 @@ void autonomous() {
 
 	if (AutonSelect == 1){
 		//roller shot
+		FlyWheelOnOffS(75);
+		DriveFWD(-19);
+		WaitTillStopDriveBase();
 		RollerToggle();
+		DriveFWD(6);
 		WaitTillStopDriveBase();
-		RPivot(-1, 5.30);
+		Turn(-1, 12);
 		WaitTillStopDriveBase();
-		FlyWheelOnOff(117);
-		Unload();
+		pros::delay(200);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+		pros::delay(450);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+		Turn(-1, 20);
+		WaitTillStopDriveBase();
+		IntakeOnOff(200);
+		DriveFWDSlow(-42);
+		WaitTillStopDriveBase();
+		Turn(1, 16);
+		WaitTillStopDriveBase();
+		pros::delay(400);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+		pros::delay(450);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+		pros::delay(450);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
 	}
 	else if (AutonSelect == 2){
 		//Center shot
+		FlyWheelOnOffS(75);
+		pros::delay(2000);
+		Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+	  pros::delay(450);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+		DriveFWD(-19);
+		WaitTillStopDriveBase();
+		Turn(-1, 12);
+		WaitTillStopDriveBase();
+		DriveFWD(-19);
+		WaitTillStopDriveBase();
 		RollerToggle();
-		Turn(-1, 45);
-		DriveFWD(-84.85);
-		Turn(1, 45);
-		FlyWheelOnOff(1);
-		pros::delay(1000);
-		Unload();
-		FlyWheelOnOff(0);
+		WaitTillStopDriveBase();
+		DriveFWD(6);
+		WaitTillStopDriveBase();
+		Turn(-1, 18.25);
+		WaitTillStopDriveBase();
+		IntakeOnOff(200);
+		DriveFWDM(-60);
+		WaitTillStopDriveBase();
+		Turn(-1, 14);
+		WaitTillStopDriveBase();
+		Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+	  pros::delay(450);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
+		pros::delay(450);
+	  Net1.set_value(true);
+	  pros::delay(100);
+	  Net1.set_value(false);
 	}
 	else if (AutonSelect == 3){
 		DT1.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -227,64 +287,48 @@ void autonomous() {
 		pros::delay(60000);
 	}
 	else if (AutonSelect == 4){
-		Net2.set_value(true);
-		Net3.set_value(true);
-		DT1.set_brake_mode(MOTOR_BRAKE_BRAKE);
-		DT2.set_brake_mode(MOTOR_BRAKE_BRAKE);
-		DT3.set_brake_mode(MOTOR_BRAKE_BRAKE);
-		DT4.set_brake_mode(MOTOR_BRAKE_BRAKE);
-		R1.set_brake_mode(MOTOR_BRAKE_BRAKE);
-		R2.set_brake_mode(MOTOR_BRAKE_BRAKE);
-		FW1.set_brake_mode(MOTOR_BRAKE_COAST);
-		FW2.set_brake_mode(MOTOR_BRAKE_COAST);
-		C1.set_brake_mode(MOTOR_BRAKE_BRAKE);
-		DriveFWD(-3);
+		FlyWheelOnOffS(140);
+		DriveFWD(-4);
 		WaitTillStopDriveBase();
 		SkillsRollerToggle();
 		WaitTillStopDriveBase();
-		DriveFWDSlow(28);
+		DriveFWD(8);
 		WaitTillStopDriveBase();
-		Turn(-1, 12);
+		Turn(-1, 16.30);
 		WaitTillStopDriveBase();
-		DriveFWDSlow(-28);
+		IntakeOnOff(200);
+		DriveFWDSlow(-16);
 		WaitTillStopDriveBase();
-		SkillsRollerToggle();
+		IntakeOnOff(0);
+		DriveFWD(-9.5);
 		WaitTillStopDriveBase();
-		DriveFWDSlow(28);
-		WaitTillStopDriveBase();
-		Turn(1, 5.7);
-		WaitTillStopDriveBase();
-		DriveFWDSlow(200);
-		WaitTillStopDriveBase();
-		DriveFWDSlow(-32.25);
-		WaitTillStopDriveBase();
-		Turn(-1, 20);
-		WaitTillStopDriveBase();
-		DriveFWDSlow(-28);
-	//	IntakeOnOff(200);
-		WaitTillStopDriveBase();
-		//IntakeOnOff(0);
-		SkillsRollerToggle();
-		WaitTillStopDriveBase();
-		DriveFWDSlow(24);
-		WaitTillStopDriveBase();
-		Turn(-1, 12);
+		Turn(1, 6);
 		WaitTillStopDriveBase();
 		DriveFWDSlow(-24);
-		//IntakeOnOff(200);
 		WaitTillStopDriveBase();
-	//	IntakeOnOff(0);
 		SkillsRollerToggle();
 		WaitTillStopDriveBase();
-		DriveFWDSlow(14);
+		DriveFWD(6);
 		WaitTillStopDriveBase();
-		Turn(1, 12);
+		IntakeOnOff(200);
+		Turn(1, 12.5);
 		WaitTillStopDriveBase();
-		DriveFWDSlow(-10);
+		DriveFWDM(46);
 		WaitTillStopDriveBase();
-		Turn(-1, 6);
+		Turn(1, 1.2);
 		WaitTillStopDriveBase();
-		Expansion();
+		Unload();
+		DriveFWDM(-36);
+		WaitTillStopDriveBase();
+		Turn(1, 18);
+		WaitTillStopDriveBase();
+		DriveFWDM(-62);
+		WaitTillStopDriveBase();
+		Turn(1, 8);
+		WaitTillStopDriveBase();
+		DriveFWD(-40);
+		WaitTillStopDriveBase();
+
 	}
 	else {
 
